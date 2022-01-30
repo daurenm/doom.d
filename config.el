@@ -4,7 +4,7 @@
       user-mail-address "dauren.ktl@gmail.com")
 
 ;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 14 :weight 'regular))
-(setq doom-font (font-spec :family "JetBrains Mono" :size 13 :weight 'regular)
+(setq doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'regular)
       doom-theme 'doom-nord)
 
 (setq display-line-numbers-type nil)
@@ -36,15 +36,26 @@
 (setq flycheck-c/c++-gcc-executable "g++-11")
 (setq flycheck-disabled-checkers '(c/c++-clang))
 
-;; (defun compile-c-advanced ()
-;;   (interactive)
-;;   (defvar foo)
-;;   (setq
-;;    foo (concat "g++-11 -Wall -Wextra -O2 " (buffer-name) " -o " (file-name-base) " && ./" (file-name-base) " < input > output"))
-;;   (shell-command foo)
-;;   (let ((buffer (find-file "output")))
-;;     (display-buffer buffer
-;;                     '(display-buffer-at-bottom))))
+(defun compile-c-advanced ()
+  (interactive)
+
+  ;;; saved for learning...
+  ;; (set (make-local-variable 'compile-command)
+  ;;    (let ((file (file-name-nondirectory buffer-file-name)))
+  ;;      (format "g++-11 -Wall -Wextra -Wshadow -Werror -O2 -o %s %s && ./%s < input\n"
+  ;;          (file-name-sans-extension file)
+  ;;          file
+  ;;          (file-name-sans-extension file))))
+  ;; (compile compile-command)
+
+  (defvar makefile)
+  (setq makefile (concat "make -B " (file-name-base) "\n"))
+  ;; buffer-name -> file name
+  ;; file-name-base -> file name w/o extension
+  (compile makefile)
+  ;; (shell-command makefile)
+
+  (global-auto-revert-mode)) ;; reload all buffers
 
 (defun compile-c-default ()
   (interactive)
@@ -57,18 +68,7 @@
            (file-name-sans-extension file))))
     (compile compile-command)))
 
-(map! :n ", c" #'compile-c-default)
-
-
-
-;; (setq compilation-read-command nil)
-;; (setq compile-command
-;;       		(concat "make -k "
-;; 			(if buffer-file-name
-;; 			  (shell-quote-argument
-;; 			    (file-name-sans-extension buffer-file-name)))))
-      ;; (concat "g++-11 -Wall -Wextra -O2 " (buffer-name) " -o " (file-name-base) " && ./" (file-name-base) " < input"))
-
+(map! :n ", c" #'compile-c-advanced)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
