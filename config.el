@@ -28,6 +28,9 @@
 (setq evil-split-window-below t
       evil-vsplit-window-right t)
 
+;; display company docs faster (default is 0.5)
+(setq company-box-doc-delay 0.3)
+
 ;;
 ;;; Keybinds
 
