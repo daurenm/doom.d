@@ -7,7 +7,7 @@
 (setq doom-font (font-spec :family "JetBrains Mono" :size 13 :weight 'regular)
       doom-theme 'doom-nord)
 
-(setq display-line-numbers-type t)
+(setq display-line-numbers-type nil)
 
 ;; Look for projects in a specific folder
 (setq projectile-project-search-path '("~/Documents/dev/"))
@@ -36,26 +36,28 @@
 (setq flycheck-c/c++-gcc-executable "g++-11")
 (setq flycheck-disabled-checkers '(c/c++-clang))
 
-;; awkward compilation
-(defun execute-c-program ()
-  (interactive)
-  (defvar foo)
-  (setq
-   foo (concat "g++-11 -Wall -Wextra -O2 " (buffer-name) " -o " (file-name-base) " && ./" (file-name-base) " < input"))
-  (shell-command foo))
+;; (defun compile-c-advanced ()
+;;   (interactive)
+;;   (defvar foo)
+;;   (setq
+;;    foo (concat "g++-11 -Wall -Wextra -O2 " (buffer-name) " -o " (file-name-base) " && ./" (file-name-base) " < input > output"))
+;;   (shell-command foo)
+;;   (let ((buffer (find-file "output")))
+;;     (display-buffer buffer
+;;                     '(display-buffer-at-bottom))))
 
-(defun code-compile ()
+(defun compile-c-default ()
   (interactive)
   (unless (file-exists-p "Makefile")
     (set (make-local-variable 'compile-command)
      (let ((file (file-name-nondirectory buffer-file-name)))
-       (format "g++-11 -Wall -O2 -Wextra -o %s %s && ./%s < input\n"
+       (format "g++-11 -Wall -Wextra -Wshadow -O2 -o %s %s && ./%s < input\n"
            (file-name-sans-extension file)
            file
            (file-name-sans-extension file))))
     (compile compile-command)))
 
-(map! :n ", c" #'code-compile)
+(map! :n ", c" #'compile-c-default)
 
 
 
