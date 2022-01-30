@@ -45,8 +45,9 @@
 ;;; Codeforces Config
 (setq flycheck-c/c++-gcc-executable "g++-11")
 (setq flycheck-disabled-checkers '(c/c++-clang))
+(setq compile-command "make -B ")
 
-(defun compile-c-advanced ()
+(defun compile-cpp-advanced ()
   (interactive)
 
   ;;; saved for learning...
@@ -63,11 +64,20 @@
   ;; buffer-name -> file name
   ;; file-name-base -> file name w/o extension
   (compile makefile)
+
+  ;; running as a shell command
   ;; (shell-command makefile)
 
-  (global-auto-revert-mode)) ;; reload all buffers
+  ;; reload all buffers
+  (global-auto-revert-mode))
 
-(defun compile-c-default ()
+(defun makefile-cpp ()
+  (interactive)
+  (if (string-match-p "cpp" (buffer-name))
+      (compile-cpp-advanced)
+    (recompile)))
+
+(defun compile-cpp-default ()
   (interactive)
   (unless (file-exists-p "Makefile")
     (set (make-local-variable 'compile-command)
@@ -78,7 +88,7 @@
            (file-name-sans-extension file))))
     (compile compile-command)))
 
-(map! :n ", c" #'compile-c-advanced)
+(map! :n ", c" #'makefile-cpp)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
