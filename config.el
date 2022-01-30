@@ -16,6 +16,13 @@
 ;; change `org-directory'. It must be set before org loads!
 (setq org-directory "~/org/")
 
+;; Make (-) be a part of word,
+;; allows for easier movement/selection/deletion
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
+
 ;;; :editor evil
 ;; Focus new window after splitting
 (setq evil-split-window-below t
