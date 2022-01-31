@@ -36,7 +36,7 @@
 
 (map!
  :n ", ," #'save-buffer
- :n ", q" #'kill-current-buffer
+ ;; :n ", q" #'kill-current-buffer
 
  :leader "w f" #'doom/window-maximize-buffer)
 
@@ -77,6 +77,11 @@
       (compile-cpp-advanced)
     (recompile)))
 
+(defun makefile-clean-cpp ()
+  (interactive)
+  (compile "make clean")
+  (global-auto-revert-mode))
+
 (defun compile-cpp-default ()
   (interactive)
   (unless (file-exists-p "Makefile")
@@ -89,6 +94,7 @@
     (compile compile-command)))
 
 (map! :n ", c" #'makefile-cpp)
+(map! :n ", n" #'makefile-clean-cpp)
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;
