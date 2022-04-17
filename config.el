@@ -8,6 +8,8 @@
       doom-theme 'doom-nord)
 
 (setq display-line-numbers-type nil)
+(setq-default tab-width 2)
+(setq +zen-text-scale 0)
 
 ;; Look for projects in a specific folder
 (setq projectile-project-search-path '("~/Documents/dev/"))
@@ -36,7 +38,7 @@
 
 (map!
  :n ", ," #'save-buffer
- ;; :n ", q" #'kill-current-buffer
+ ;; :n ", q" #'kill-current-buffer ;; redundant due to 'zx'
 
  :leader "w f" #'doom/window-maximize-buffer)
 
