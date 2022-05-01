@@ -39,9 +39,20 @@
 (map!
  :n ", ," #'save-buffer
  ;; :n ", q" #'kill-current-buffer ;; redundant due to 'zx'
-
  :leader "w f" #'doom/window-maximize-buffer)
 
+(map! :map general-override-mode-map
+      :ei "C-d" #'delete-forward-char)
+
+;; jump between headings
+(map! (:after evil-org
+       :map evil-org-mode-map
+       :n "gk" (cmd! (if (org-on-heading-p)
+                         (org-backward-element)
+                       (evil-previous-visual-line)))
+       :n "gj" (cmd! (if (org-on-heading-p)
+                         (org-forward-element)
+                       (evil-next-visual-line)))))
 
 ;;
 ;;; Codeforces Config
