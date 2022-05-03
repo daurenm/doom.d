@@ -29,6 +29,8 @@
 ;; display company docs faster (default is 0.5)
 (setq company-box-doc-delay 0.3)
 
+;; setup TERM when for KITTY
+(setq vterm-term-environment-variable "xterm-kitty")
 ;;
 ;;; Keybinds
 
