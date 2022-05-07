@@ -13,10 +13,4 @@
                        (evil-next-visual-line)))))
 
 (after! org
-  (setq org-todo-keywords '((sequence "TODO(t)" "BLOCKED(b)" "|" "DONE(d)" "CANCELLED(c)")
-                            (sequence "[ ](T)" "[-](S)" "[?](W)" "|" "[X](D)"))
-        ;; org-todo-keyword-faces '(("BLOCKED" . +org-todo-onhold),
-        ;;                          ("DONE" . +org-todo-active)))
-        org-todo-keyword-faces '(("[-]" . +org-todo-active)
-                                 ("[?]" . +org-todo-onhold)
-                                 ("BLOCKED" . +org-todo-onhold))))
+  (setq org-todo-keywords '((sequence "TODO(t)" "HOLD(h)" "|" "DONE(d)" "KILL(k)"))))
