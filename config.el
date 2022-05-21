@@ -12,7 +12,7 @@
 (setq +zen-text-scale 0)
 
 ;; Look for projects in a specific folder
-(setq projectile-project-search-path '("~/Documents/dev/"))
+(setq projectile-project-search-path '("~/Documents/dev/" "~/org"))
 
 ;; Make (-) be a part of word,
 ;; allows for easier movement/selection/deletion
@@ -36,8 +36,9 @@
 
 (map!
  :n ", ," #'save-buffer
- ;; :n ", q" #'kill-current-buffer ;; redundant due to 'zx'
  :leader "w f" #'doom/window-maximize-buffer)
+
+(define-key global-map (kbd "C-c M-3") (lambda () (interactive) (insert "£")))
 
 (map! :map general-override-mode-map
       :ei "C-d" #'delete-forward-char)
