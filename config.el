@@ -14,6 +14,10 @@
 ;; Look for projects in a specific folder
 (setq projectile-project-search-path '("~/Documents/dev/" "~/org"))
 
+;; Disable auto completion popup
+(after! company
+  (setq company-idle-delay nil))
+
 ;; Make (-) be a part of word,
 ;; allows for easier movement/selection/deletion
 (with-eval-after-load 'evil
