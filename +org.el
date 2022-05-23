@@ -4,8 +4,8 @@
       org-archive-location (concat org-directory ".archive/%s::"))
 
 ;; (setq org-time-stamp-custom-formats '("<%d.%m %a>" . "<%d.%m %a %H:%M>")) ; european
-(setq org-time-stamp-custom-formats '("<%m-%d %a>" . "<%m-%d %a %H:%M>")) ; american (ISO)
-(setq org-display-custom-times t)
+;; (setq org-time-stamp-custom-formats '("<%m-%d %a>" . "<%m-%d %a %H:%M>")) ; american (ISO)
+;; (setq org-display-custom-times t)
 
 ;; jump between headings
 (map! (:after evil-org
