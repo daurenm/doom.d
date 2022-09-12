@@ -3,12 +3,40 @@
 (setq user-full-name "Dauren Muratov"
       user-mail-address "dauren.ktl@gmail.com")
 
+;;
+;;; Editing 
+
 ;; (setq doom-font (font-spec :family "SauceCodePro Nerd Font" :size 14 :weight 'regular))
 (setq doom-font (font-spec :family "JetBrains Mono" :size 14 :weight 'regular)
       doom-theme 'doom-nord
-      display-line-numbers-type nil)
+      display-line-numbers-type nil
+      evil-split-window-below t
+      evil-vsplit-window-right t
+      suggest-key-bindings nil)
 
-(setq-default tab-width 2)
+(setq-default tab-width 2
+              scroll-margin 7)
+
+;; Make (-) be a part of word,
+;; allows for easier movement/selection/deletion
+(with-eval-after-load 'evil
+    (defalias #'forward-evil-word #'forward-evil-symbol)
+    ;; make evil-search-word look for symbol rather than word boundaries
+    (setq-default evil-symbol-word-search t))
+
+;;
+;;; Keybinds
+(map! :n ", ," #'save-buffer
+ :leader "w f" #'doom/window-maximize-buffer)
+
+(define-key global-map (kbd "C-c M-3") (lambda () (interactive) (insert "£")))
+
+(map! :map general-override-mode-map
+      :ei "C-d" #'delete-forward-char)
+
+;;
+;;; Other Configs
+
 (setq +zen-text-scale 0)
 
 ;; Look for projects in a specific folder
@@ -18,37 +46,15 @@
 (after! company
   (setq company-idle-delay nil))
 
-;; Make (-) be a part of word,
-;; allows for easier movement/selection/deletion
-(with-eval-after-load 'evil
-    (defalias #'forward-evil-word #'forward-evil-symbol)
-    ;; make evil-search-word look for symbol rather than word boundaries
-    (setq-default evil-symbol-word-search t))
-
-;;; :editor evil
-;; Focus new window after splitting
-(setq evil-split-window-below t
-      evil-vsplit-window-right t)
-
 ;; display company docs faster (default is 0.5)
 (setq company-box-doc-delay 0.3)
 
 ;; setup TERM when for KITTY
 (setq vterm-term-environment-variable "xterm-kitty")
-;;
-;;; Keybinds
-
-(map!
- :n ", ," #'save-buffer
- :leader "w f" #'doom/window-maximize-buffer)
-
-(define-key global-map (kbd "C-c M-3") (lambda () (interactive) (insert "£")))
-
-(map! :map general-override-mode-map
-      :ei "C-d" #'delete-forward-char)
 
 (load! "+org")
 (load! "+acm")
+
 
 ;; Here are some additional functions/macros that could help you configure Doom:
 ;;

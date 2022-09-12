@@ -15,7 +15,8 @@
                        (evil-previous-visual-line)))
        :n "gj" (cmd! (if (org-on-heading-p)
                          (org-forward-element)
-                       (evil-next-visual-line)))))
+                       (evil-next-visual-line)))
+       :n "z o" #'org-show-subtree))
 
 ;; (setq org-agenda-custom-commands
 ;;       '(("n" "Agenda and all TODOs"
@@ -23,13 +24,32 @@
 ;;           (alltodo ""))))
 
 (after! org
-  (setq org-todo-keywords '((sequence "TODO(t)" "MISC(m)" "HOLD(h)" "|" "DONE(d)" "KILL(k)"))
+  (setq org-startup-folded 'show2levels
+        org-ellipsis " [...] "
+        org-todo-keywords '((sequence "TODO(t)" "MISC(m)" "HOLD(h)" "|" "DONE(d)" "KILL(k)"))
         org-todo-keyword-faces '(("MISC" . org-cite)
-                                 ("HOLD" . org-warning)))
+                                 ("HOLD" . org-warning))
+        org-hide-emphasis-markers t
+        org-capture-templates
+        '(("t" "todo" entry (file+headline "todo.org" "Inbox")
+           ;; "* TODO %?\n%i\n%a"
+           "* TODO %?"
+           :prepend t)
+          ("d" "deadline" entry (file+headline "todo.org" "Scheduled")
+           ;; "* TODO %?\nDEADLINE: <%(org-read-date)>\n\n%i\n%a"
+           "* TODO %?\nDEADLINE: <%(org-read-date)>\n"
+           :prepend t)
+          ("s" "schedule" entry (file+headline "todo.org" "Scheduled")
+           ;; "* TODO %?\nSCHEDULED: <%(org-read-date)>\n\n%i\n%a"
+           "* TODO %?\nSCHEDULED: <%(org-read-date)>\n"
+           :prepend t)
+          ("c" "later" entry (file+headline "todo.org" "Later")
+           ;; "* [ ] %?\n%i\n%a"
+           "* [ ] %?"
+           :prepend t)))
 
   (map! :n ", a" #'org-agenda
         :n ", t" (cmd! (org-agenda nil "n"))
-        :map general-override-mode-map "C-c C-w" #'org-check-deadlines
+        :n ", d" #'org-check-deadlines
         :ne "C-c l" #'org-store-link
-        :n "z o" #'org-show-subtree
         :map general-override-mode-map "C-c ," #'org-time-stamp-inactive))
