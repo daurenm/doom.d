@@ -10,13 +10,13 @@
 ;; jump between headings
 (map! (:after evil-org
        :map evil-org-mode-map
-       :n "gk" (cmd! (if (org-on-heading-p)
+       :n "gk" (cmd! (if (org-at-heading-p)
                          (org-backward-element)
                        (evil-previous-visual-line)))
-       :n "gj" (cmd! (if (org-on-heading-p)
+       :n "gj" (cmd! (if (org-at-heading-p)
                          (org-forward-element)
                        (evil-next-visual-line)))
-       :n "z o" #'org-show-subtree))
+       :n "z o" #'org-fold-show-subtree))
 
 ;; (setq org-agenda-custom-commands
 ;;       '(("n" "Agenda and all TODOs"

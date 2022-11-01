@@ -12,7 +12,8 @@
       display-line-numbers-type nil
       evil-split-window-below t
       evil-vsplit-window-right t
-      suggest-key-bindings nil)
+      suggest-key-bindings nil
+      initial-major-mode 'lisp-interaction-mode)
 
 (setq-default tab-width 2
               scroll-margin 7)
@@ -34,6 +35,13 @@
 (map! :map general-override-mode-map
       :ei "C-d" #'delete-forward-char)
 
+(defun dm-elisp-mode-eval-buffer-or-region ()
+  (interactive)
+  (message "Evaluated Elisp!")
+  (+eval/buffer-or-region))
+
+(define-key lisp-interaction-mode-map (kbd "C-c C-c") #'dm-elisp-mode-eval-buffer-or-region)
+(define-key emacs-lisp-mode-map (kbd "C-c C-c") #'dm-elisp-mode-eval-buffer-or-region)
 ;;
 ;;; Other Configs
 
